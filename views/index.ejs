@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sistema de ticketin</title>
+
+    <link href="../inspinia/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../inspinia/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="../css/plugins/dataTables/datatables.min.css" rel="stylesheet">
+    <link href="../inspinia/css/animate.css" rel="stylesheet">
+    <link href="../inspinia/css/plugins/summernote/summernote.css" rel="stylesheet">
+    <link href="../inspinia/css/plugins/summernote/summernote-bs3.css" rel="stylesheet">
+    <link href="../inspinia/css/style.css" rel="stylesheet">
+    <link href="../inspinia/css/plugins/footable/footable.core.css" rel="stylesheet">
+    <link href="../inspinia/css/plugins/select2/select2.min.css" rel="stylesheet">
+
+</head>
+
+<body class="">
+
+    <div id="wrapper">
+
+        <nav class="navbar-default navbar-static-side" role="navigation">
+            <div class="sidebar-collapse">
+                <ul class="nav metismenu" id="side-menu">
+                    <li class="nav-header">
+                        <div class="dropdown profile-element"> <span>
+                            <img alt="image" class="img-circle" src="../inspinia/img/profile_small.jpg" />
+                             </span>
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                            <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold"><%= user.name%>></strong>
+                             </span> <span class="text-muted text-xs block">Art Director <b class="caret"></b></span> </span> </a>
+                            <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                                <li><a href="profile.html">Profile</a></li>
+                                <li><a href="contacts.html">Contacts</a></li>
+                                <li><a href="mailbox.html">Mailbox</a></li>
+                                <li class="divider"></li>
+                                <li><a href="login.html">Logout</a></li>
+                            </ul>
+                        </div>
+                        <div class="logo-element">
+                            IN+
+                        </div>
+                    </li>
+                    <li>
+                        <a href="index.html"><i class="fa fa-th-large"></i> <span class="nav-label">Dashboards</span> <span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level collapse">
+                            <li><a href="index.html">Dashboard v.1</a></li>
+                            <li><a href="dashboard_2.html">Dashboard v.2</a></li>
+                            <li><a href="dashboard_3.html">Dashboard v.3</a></li>
+                            <li><a href="dashboard_4_1.html">Dashboard v.4</a></li>
+                            <li><a href="dashboard_5.html">Dashboard v.5 </a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="layouts.html"><i class="fa fa-diamond"></i> <span class="nav-label">Layouts</span></a>
+                    </li>
+
+
+
+                </ul>
+
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="gray-bg">
+            <div class="row border-bottom">
+                <nav class="navbar navbar-static-top  " role="navigation" style="margin-bottom: 0">
+                    <div class="navbar-header">
+                        <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
+                        <form role="search" class="navbar-form-custom" action="search_results.html">
+                            <div class="form-group">
+                                <input type="text" placeholder="Search for something..." class="form-control" name="top-search" id="top-search">
+                            </div>
+                        </form>
+                    </div>
+                    <ul class="nav navbar-top-links navbar-right">
+                        <li>
+                            <span class="m-r-sm text-muted welcome-message">Bienvenido al sistema de ticketing</span>
+                        </li>
+
+                        <li>
+                            <a href="login.html">
+                        <i class="fa fa-sign-out"></i> Log out
+                    </a>
+                        </li>
+                    </ul>
+
+                </nav>
+            </div>
+            <div class="row wrapper border-bottom white-bg page-heading">
+                <div class="col-sm-4">
+                    <h2>This is main title</h2>
+                    <ol class="breadcrumb">
+                        <li>
+                            <a href="index.html">This is</a>
+                        </li>
+                        <li class="active">
+                            <strong>Breadcrumb</strong>
+                        </li>
+                    </ol>
+                </div>
+                <div class="col-sm-8">
+                    <div class="title-action">
+                        
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalAdd">Agregar nuevo ticket</button>
+                        <button class="btn btn-success">Ver tickets cerrados</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="wrapper wrapper-content">
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <h5>Tickets vigentes</h5>
+                                <div class="ibox-tools">
+                                    <a class="collapse-link">
+                                                                <i class="fa fa-chevron-up"></i>
+                                                            </a>
+
+
+
+                                </div>
+                            </div>
+                            <div class="ibox-content">
+
+                                <div class="table-responsive">
+                                    <table id="Tickets" class="footable table table-stripped toggle-arrow-tiny" data-page-size="10">
+                                        <thead>
+                                            <tr>
+                                                <th data-toggle="all">Número</th>
+                                                <th data-toggle="phone">Cliente</th>
+
+                                                <th data-hide="phone">Creado por:</th>
+                                                <th data-hide="phone">Fecha</th>
+                                                <th data-hide="phone">Hora</th>
+                                                <th data-hide="all">Description</th>
+                                                <th data-hide="phone">Asunto</th>
+                                                <th data-hide="phone">Prioridad</th>
+                                                <th data-hide="phone">Tipo</th>
+                                                <th class="text-right" data-sort-ignore="true">Acción</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr w3-repeat="tickets">
+                                                <td>{{id}}</td>
+                                                <td>{{client}}</td>
+
+                                                <td>{{username}}</td>
+                                                <td>{{date}}</td>
+                                                <td>{{time}}</td>
+                                                <td> {{description}}</td>
+                                                <td>{{subject}}</td>
+                                                <td>
+                                                    <span class="label label-{{priority}}">{{name}}</span>
+                                                </td>
+                                                <td><span class="label label-{{type}}">{{tipo}}</span></td>
+                                                <td class="text-right">
+                                                    <div class="btn-group">
+                                                        <button onclick="openIns('{{id}}')" class="btn-white btn btn-xs">Incidencias</button>
+                                                        <button class="btn-white btn btn-xs">Edit</button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+
+
+
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td colspan="6">
+                                                    <ul class="pagination pull-right"></ul>
+                                                </td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+
+                </div>
+
+
+            </div>
+            <div class="footer">
+                <div class="pull-right">
+                    Cineto Telecomunicaciones S.A.
+                </div>
+                <div>
+                    <strong>Copyright</strong> Cineto Telecomunicaciones S.A. &copy; 2017
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <div class="modal inmodal fade" id="modalAdd" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content modal-lg">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">Registrar un nuevo ticket</h4>
+
+                </div>
+                <div class="modal-body">
+                    <form id="formAdd">
+
+
+                        <fieldset class="form-horizontal">
+
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <div class="form-group"><label class="col-sm-3 control-label">Cliente:</label>
+                                        <div class="col-sm-9">
+                                            <select id="Clients" class="form-control" name="client">
+                                                <option w3-repeat="clients"  value="{{id}}">{{name}}</option>
+                                            </select></div>
+                                    </div>
+                                    <div class="form-group"><label class="col-sm-3 control-label">Tipo:</label>
+                                        <div class="col-sm-9">
+                                            <select class="form-control" name="type" id="type">
+                                                <option value="success">SOPORTE</option>
+                        
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+                                <div class="col-md-7">
+                                    <div class="form-group"><label class="col-sm-3 control-label">Prioridad:</label>
+                                        <div class="col-sm-9">
+                                            <select class="form-control" name="priority" id="priority">
+                                                    <option value="primary">BAJA</option>
+                                                    <option value="warning">MEDIA</option>
+                                                    <option value="danger">ALTA</option>
+                                                </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group"><label class="col-sm-3 control-label">Asunto:</label>
+                                        <div class="col-sm-9"><input type="text" class="form-control" name="subject" placeholder="Ingrese el asunto"></div>
+                                    </div>
+
+
+                                    <input type="hidden" value="<%= user.id%>" name="user">
+
+
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <textarea class="form-control summernote" name="description" id="description" cols="30" rows="10"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                        </fieldset>
+                    </form>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                    <button id="saveTicket" type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalIns" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content modal-lg">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">Ticket #</h4>
+
+                </div>
+                <div class="modal-body">
+
+
+
+                        <div class="row">
+                            <div class="form-group">
+
+                                <div class="col-md-7">
+                                    <textarea class="form-control summernote2" name="description" id="description" cols="30" rows="10">
+                                                    <div id="txtDesc"></div>
+                                                </textarea>
+                                </div>
+                                <div class="col-md-5">
+
+                                    <div class="table-responsive">
+                                        <table id="Incidences" class="footabled table table-stripped toggle-arrow-tiny" data-page-size="10">
+                                            <thead>
+                                                <tr>
+                                                    <th data-hide="true">Creado por:</th>
+                                                    <th data-hide="phone">Fecha</th>
+                                                    <th data-hide="phone">Hora</th>
+                                                    <th data-hide="all">Description</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr w3-repeat="incidences">
+                                                    <td>{{user}}</td>
+                                                    <td>{{date}}</td>
+                                                    <td>{{time}}</td>
+                                                    <td> {{description}}</td>
+                                                </tr>
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <td colspan="6">
+                                                        <ul class="pagination pull-right"></ul>
+                                                    </td>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+
+
+
+                                    <p>Agregar una nueva incidencia.</p>
+
+                                    <form id="formIncidence">
+                                        <input type="hidden" name="user" value="<%=user.id%>">
+                                        <input id="txtTicket" type="hidden" name="ticket" value="">
+
+                                        <div class="form-group">
+
+                                            <textarea autofocus class="form-control" name="description" placeholder="Escriba aquí" id=""></textarea>
+                                        </div>
+
+                                        <div>
+                                            <button id="saveIncidence" class="btn btn-sm btn-primary pull-right m-t-n-xs" type="button"><strong>Enviar</strong></button>
+                                            <label> <input type="checkbox" name="isClosed" class="i-checks"> Finalizar ticket </label>
+                                        </div>
+
+                                    </form>
+
+
+
+
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                    <button id="saveTicket" type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mainly scripts -->
+    <script src="../inspinia/js/jquery-3.1.1.min.js"></script>
+    <script src="../inspinia/js/bootstrap.min.js"></script>
+    <script src="../inspinia/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="../inspinia/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+
+    <!-- Custom and plugin javascript -->
+    <script src="../inspinia/js/inspinia.js"></script>
+    <script src="../inspinia/js/plugins/pace/pace.min.js"></script>
+
+    <!-- SUMMERNOTE -->
+    <script src="../inspinia/js/plugins/summernote/summernote.min.js"></script>
+
+    <script src="../inspinia/js/plugins/dataTables/datatables.min.js"></script>
+
+    <!-- FooTable -->
+    <script src="../inspinia/js/plugins/footable/footable.all.min.js"></script>
+
+    <script src="../inspinia/js/w3.js"></script>
+
+    <script src="../inspinia/js/plugins/select2/select2.full.min.js"></script>
+
+
+
+    <script>
+        $(document).ready(function () {
+            $('.summernote').summernote({
+                height: 150
+            });
+            $('.summernote2').summernote({
+                height: 400
+            });
+            refreshTicket();
+        });
+
+        $('#saveTicket').click(function () {
+            var data = $('#formAdd').serialize();
+            $.post("/ticket", data, function (data) {
+                if (data.affectedRows == 1) {
+                    location.href = "/";
+
+                } else {
+                    alert('Existio un error');
+                }
+
+            });
+        });
+
+        $('#saveIncidence').click(function () {
+            var data = $('#formIncidence').serialize();
+            $.post("/incidence", data, function (data) {
+                if (data.affectedRows == 1) {
+                    location.href = "/";
+
+                } else {
+                    alert('Existio un error');
+                }
+
+            });
+
+        });
+
+
+
+        function refreshTicket() {
+            $.get("/tickets/<%= user.id%>", function (data) {
+                w3.displayObject("Tickets", { tickets: data });
+                $('.footable').footable();
+
+            });
+
+            $.get("/client", function (data) {
+                w3.displayObject("Clients", { clients: data });
+            });
+
+
+        }
+
+        function openIns(ticket) {
+            $.get("/ticket/" + ticket, function (tickets) {
+                $("#txtDesc").html(tickets[0].description);
+                $("#txtTicket").val(tickets[0].id);
+
+            });
+
+            $.get("/incidence/" + ticket, function (data) {
+                w3.displayObject("Incidences", { incidences: data });
+
+                $("#modalIns").modal();
+            });
+
+
+        }
+    </script>
+
+
+</body>
+
+</html>
