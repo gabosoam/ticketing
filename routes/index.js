@@ -11,6 +11,20 @@ router.get('/', isLoggedIn, function (req, res, next) {
   res.render('index', { user: sess.usuarioDatos });
 });
 
+router.get('/admin', isLoggedInAdmin, function (req, res, next) {
+  res.render('admin', { user: sess.adminDatos });
+});
+
+/* GET home page. */
+router.get('/clients', isLoggedIn, function (req, res, next) {
+  res.render('client', { user: sess.usuarioDatos });
+});
+
+/* GET home page. */
+router.get('/users', isLoggedInAdmin, function (req, res, next) {
+  res.render('user', { user: sess.adminDatos });
+});
+
 router.get('/tickets/:user', function (req, res, next) {
   var userTicket = req.params.user;
   ticket.read(userTicket, function (error, results) {
@@ -48,6 +62,7 @@ router.get('/incidence/:ticket', function (req, res, next) {
 });
 
 router.post('/ticket', function (req, res, next) {
+  console.log('Ya llegué');
   var data = req.body;
 
   console.log(data);
@@ -85,6 +100,61 @@ router.get('/client', function (req, res, next) {
   })
 });
 
+router.post('/client/update', function (req,res,next) {
+  var datos= req.body;
+  client.update(datos,function(error, datos){
+   if (error) {
+
+     res.sendStatus(500);
+   } else {
+
+     if (datos.affectedRows>0) {
+          res.send(true);
+     } else {
+           res.sendStatus(500);
+     }   
+   }
+ })
+});
+
+router.post('/client/delete', function (req,res,next) {
+  var datos= req.body;
+  client.delete(datos,function(error, datos){
+   if (error) {
+ 
+     res.sendStatus(500);
+   } else {
+
+     if (datos.affectedRows>0) {
+          res.send(true);
+     } else {
+           res.sendStatus(500);
+     }   
+   }
+ })
+})
+
+
+router.post('/client/create', function (req,res,next) {
+  var datos= req.body;
+  client.create(datos,function(error, datos){
+   if (error) {
+
+     res.status(500).send(error);
+   } else {
+
+     if (datos.affectedRows>0) {
+          res.send(true);
+     } else {
+           res.sendStatus(500);
+     }   
+   }
+ })
+})
+
+
+
+
 router.get('/user', function (req, res, next) {
   user.read(function (error, results) {
     if (error) {
@@ -96,10 +166,86 @@ router.get('/user', function (req, res, next) {
   })
 });
 
+router.post('/user/update', function (req, res, next) {
+  var datos = req.body;
+  user.update(datos, function (error, datos) {
+    if (error) {
+      res.sendStatus(500);
+    } else {
+
+      if (datos.affectedRows > 0) {
+        res.send(true);
+      } else {
+        res.sendStatus(500);
+      }
+    }
+  })
+})
+
+router.post('/user/editPassword', function (req, res, next) {
+
+  var datos = req.body;
+  user.updatePass(datos, function (error, datos) {
+    if (error) {
+      console.log(error);
+      res.send(error);
+    } else {
+      res.send(datos);
+      
+    }
+  })
+})
+
+router.post('/user/delete', function (req, res, next) {
+  var datos = req.body;
+  user.delete(datos, function (error, datos) {
+    if (error) {
+
+      res.sendStatus(500);
+    } else {
+
+      if (datos.affectedRows > 0) {
+        res.send(true);
+      } else {
+        res.sendStatus(500);
+      }
+    }
+  })
+})
+
+
+router.post('/user/create', function (req, res, next) {
+  var datos = req.body;
+  user.create(datos, function (error, datos) {
+    if (error) {
+
+      res.sendStatus(500);
+    } else {
+
+      if (datos.affectedRows > 0) {
+
+        res.send(true);
+      } else {
+        res.sendStatus(500);
+      }
+    }
+  })
+})
+
+
 
 
 router.get('/login', function (req, res, next) {
   res.render('login');
+});
+
+router.get('/logout', function (req, res) {
+  req.session.destroy(function (err) {
+    if (err) {
+    } else {
+      res.redirect('/login');
+    }
+  });
 });
 
 
@@ -134,6 +280,16 @@ function isLoggedIn(req, res, next) {
   sess.originalUrl = req.originalUrl;
   res.redirect('/login');
 }
+
+function isLoggedInAdmin(req, res, next) {
+  sess = req.session;
+  if (sess.adminDatos)
+    return next();
+  sess.originalUrl = req.originalUrl;
+  res.redirect('/login');
+}
+
+
 
 
 module.exports = router;
