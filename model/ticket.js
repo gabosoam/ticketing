@@ -28,6 +28,12 @@ module.exports = {
 
     create: function (data, callback) {
 
+        var myusers = "";
+        for (var i = 0; i < data.users.length; i++) {
+            console.log(data.users[i]);
+            
+        }
+
         connection.query({
             sql: 'INSERT INTO `ticket` (`client`, `type`, `priority`, `subject`, `description`, `user`) VALUES (?,?,?,?,?,?)',
             values: [data.data.client, data.data.type, data.data.priority, data.data.subject.toUpperCase(), data.data.description, data.data.user]

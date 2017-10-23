@@ -127,13 +127,15 @@
                                 <h4 id="textAux"></h4>
 
                                 <div class="table-responsive">
-                                    <table id="Tickets" class="footable table table-stripped toggle-arrow-tiny hidden " data-page-size="10" data-filtering="true">
+                                    <table id="Tickets" class="footable table table-stripped toggle-arrow-tiny hidden " data-page-size="2" data-filtering="true">
                                         <thead>
                                             <tr>
                                                 <th data-toggle="all">Informacíon</th>
                                                 <th data-hide="lg">Prioridad</th>
-                                                <th data-hide="lg">Tipo</th>
+
                                                 <th data-hide="lg">Estado</th>
+                                                <th data-hide="lg">Responsables</th>
+                                                <th data-hide="all">Tipo</th>
                                                 <th data-hide="all">Descriptión</th>
                                                 <th class="text-right" data-sort-ignore="true">Acción</th>
 
@@ -158,11 +160,15 @@
                                                 <td>
                                                     <span class="label label-{{priority}}">{{name}}</span>
                                                 </td>
-                                                <td>
-                                                    <span class="label label-{{type}}">{{tipo}}</span>
-                                                </td>
+
                                                 <td>
                                                     <span class="label label-{{state}}">{{stateName}}</span>
+                                                </td>
+                                                <td>
+                                                    <span class="">{{responsables}}</span>
+                                                </td>
+                                                <td>
+                                                    <span class="label label-{{type}}">{{tipo}}</span>
                                                 </td>
 
                                                 <td>{{description}}</td>
@@ -520,6 +526,7 @@
 
 
     <script>
+        var aux = false;
         var socket = io.connect();
 
         $(document).ready(function () {
@@ -581,7 +588,8 @@
         }
 
         $('#saveIncidence').click(function () {
-            var data = $('#formIncidence').serialize();
+            if (aux) {
+                var data = $('#formIncidence').serialize();
 
 
             $.post("/incidence", data, function (data) {
@@ -593,6 +601,11 @@
                 }
 
             });
+                
+            } else {
+                alert('No puedes ingresar insidencias');
+            }
+          
 
         });
 
@@ -633,8 +646,9 @@
 
 
         function openIns(ticket) {
+            aux = false
             $.get("/ticket/" + ticket, function (tickets) {
-                console.log(tickets);
+
                 $("#txtTicket").val(tickets[0].id);
                 console.log();
 
@@ -649,6 +663,16 @@
             $('#textAux2').text('Ticket seleccionado: #' + ticket);
 
             $.get("/incidence/" + ticket, function (data) {
+
+                var responsables = data[0].responsables.split('-');
+
+                for (var i = 0; i < responsables.length; i++) {
+                    if (responsables[i] == '<%= user.name%>') {
+                        aux = true;
+                    }
+
+                }
+
 
                 if (data.length > 0) {
                     w3.removeClass("#Incidences", 'hidden');
