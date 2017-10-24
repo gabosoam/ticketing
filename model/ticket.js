@@ -1,4 +1,13 @@
 var connection = require('../config/connection.js');
+const nodemailer = require('nodemailer');
+
+var transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'gabosoam621@gmail.com',
+      pass: 'gaso621561'
+    }
+  });
 
 module.exports = {
     read: function (user, callback) {
@@ -30,7 +39,7 @@ module.exports = {
 
         var myusers = "";
         for (var i = 0; i < data.users.length; i++) {
-            console.log(data.users[i]);
+           
             
         }
 
@@ -41,21 +50,22 @@ module.exports = {
             if (error) {
                 callback(error, null);
             } else {
-                console.log(results);
+    
 
                 if (results.affectedRows = 1) {
+
+                    var idcreate=results.insertId;
                     connection.query({
                         sql: 'INSERT INTO `incidence` (`user`, `ticket`, `description`) VALUES (?, ?, \'Ha creado el ticket\')',
                         values: [data.data.user,results.insertId]
                     }, function (error, results, fields) {
                         if (error) {
-                            console.log(error)
+                       
                         } else {
-                            console.log(results);
+                          
                         }
                       
                     });
-
 
                     var sql = createQuery(results.insertId, data.users);
                     connection.query({
@@ -64,7 +74,12 @@ module.exports = {
                         if (error) {
                             callback(error, null);
                         } else {
-                            console.log(results);
+                            connection.query({
+                                sql: 'SELECT * from v_ticket2 where ids=?',
+                                values: [idcreate]
+                            },function(err, res,fields) {
+                                sendEmail(res[0]);
+                            });
 
                             callback(null, results)
                         }
@@ -80,7 +95,7 @@ module.exports = {
 
 
 function createQuery(ticket, users) {
-    console.log('creacion de query');
+
     var query = 'INSERT INTO `assignment` (`user`, `ticket`) VALUES';
     var data = '';
     for (var i = 0; i < users.length; i++) {
@@ -90,8 +105,55 @@ function createQuery(ticket, users) {
 
     data = data.slice(0, -1);
 
-    console.log(' el query es: ' + query + ' ' + data + ';')
+
 
     return query + ' ' + data + ';';
 
+}
+
+
+function sendEmail(data) {
+   console.log('he lleado')
+    
+
+      var mailOptions = {
+        from: 'gabosoam621@gmail.com',
+        to: data.responsables+','+data.clientemail,
+        subject: 'Apertura de ticket # '+data.ids,
+        html: '<div style="font-family: \'Arial Narrow\';  max-width: 600px">'+
+        '<h2 style="text-align: center;">Cineto Telecomunicaciones S.A</h2>'+
+        '<h3 style="text-align: center;">Apertura de ticket # '+data.ids+'</h3>'+
+        '<center><div style="border-radius: 25px;padding: 20px;border: 2px solid black; ">'+
+        '<table style="text-align: left;">'+
+        '   <tr>'+
+        '       <td><strong>Asunto: </strong></td>'+
+        '       <td>'+data.subject+'</td>'+
+        '   </tr>'+
+        '    <tr>'+
+        '        <td><strong>Cliente: </strong></td>'+
+        '        <td>'+data.client+'</td>'+
+        '    </tr>'+
+        '    <tr>'+
+        '        <td><strong>Fecha y hora: </strong></td>'+
+        '        <td>'+data.date+'  '+data.time+'</td>'+
+        '    </tr>'+
+        '</table>'+
+        '</div></center> <br><br><br><br><br><br><hr>'+
+        '<p>La Pinta 236 y Rábida. Quito Ecuador, Edficio Alcatel Teléfono: (593-2) 5100 528 - Email: info@cineto.net </p>'+
+        '</div>'
+      }
+
+
+
+      console.log(mailOptions);
+
+      transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+          console.log(error);
+        } else {
+            console.log('Todo bien');
+          console.log(info);
+        }
+      });
+    
 }

@@ -8,7 +8,7 @@ var incidence = require('../model/incidence');
 
 /* GET home page. */
 router.get('/', isLoggedIn, function (req, res, next) {
-  res.render('index', { user: sess.usuarioDatos });
+  res.render('index', { user: sess.usuarioDatos, message: 'null' });
 });
 
 router.get('/admin', isLoggedInAdmin, function (req, res, next) {
@@ -25,7 +25,7 @@ router.get('/users', isLoggedInAdmin, function (req, res, next) {
   res.render('user', { user: sess.adminDatos });
 });
 
-router.get('/tickets/:user', function (req, res, next) {
+router.get('/tickets/:user',isLoggedIn, function (req, res, next) {
   var userTicket = req.params.user;
   ticket.read(userTicket, function (error, results) {
     if (error) {
@@ -37,7 +37,7 @@ router.get('/tickets/:user', function (req, res, next) {
   })
 });
 
-router.get('/ticket/:code', function (req, res, next) {
+router.get('/ticket/:code', isLoggedIn, function (req, res, next) {
   var code = req.params.code;
   ticket.readOne(code, function (error, results) {
     if (error) {
@@ -49,7 +49,7 @@ router.get('/ticket/:code', function (req, res, next) {
   })
 });
 
-router.get('/incidence/:ticket', function (req, res, next) {
+router.get('/incidence/:ticket', isLoggedIn, function (req, res, next) {
   var ticket = req.params.ticket;
   incidence.read(ticket, function (error, results) {
     if (error) {
@@ -61,11 +61,11 @@ router.get('/incidence/:ticket', function (req, res, next) {
   })
 });
 
-router.post('/ticket', function (req, res, next) {
+router.post('/ticket',isLoggedIn, function (req, res, next) {
   console.log('Ya llegué');
   var data = req.body;
 
-  console.log(data);
+
   ticket.create(data, function (error, data) {
     if (error) {
       console.log(error);
@@ -76,7 +76,7 @@ router.post('/ticket', function (req, res, next) {
   });
 });
 
-router.post('/incidence', function (req, res, next) {
+router.post('/incidence', isLoggedIn, function (req, res, next) {
   var data = req.body;
 
   incidence.create(data, function (error, data) {
@@ -89,7 +89,7 @@ router.post('/incidence', function (req, res, next) {
   });
 });
 
-router.get('/client', function (req, res, next) {
+router.get('/client', isLoggedIn, function (req, res, next) {
   client.read(function (error, results) {
     if (error) {
       console.log(error);
@@ -100,7 +100,7 @@ router.get('/client', function (req, res, next) {
   })
 });
 
-router.post('/client/update', function (req,res,next) {
+router.post('/client/update',isLoggedIn, function (req,res,next) {
   var datos= req.body;
   client.update(datos,function(error, datos){
    if (error) {
@@ -117,7 +117,7 @@ router.post('/client/update', function (req,res,next) {
  })
 });
 
-router.post('/client/delete', function (req,res,next) {
+router.post('/client/delete', isLoggedIn, function (req,res,next) {
   var datos= req.body;
   client.delete(datos,function(error, datos){
    if (error) {
@@ -135,7 +135,7 @@ router.post('/client/delete', function (req,res,next) {
 })
 
 
-router.post('/client/create', function (req,res,next) {
+router.post('/client/create',isLoggedIn, function (req,res,next) {
   var datos= req.body;
   client.create(datos,function(error, datos){
    if (error) {
@@ -155,7 +155,7 @@ router.post('/client/create', function (req,res,next) {
 
 
 
-router.get('/user', function (req, res, next) {
+router.get('/user', isLoggedIn, function (req, res, next) {
   user.read(function (error, results) {
     if (error) {
       console.log(error);
@@ -166,7 +166,7 @@ router.get('/user', function (req, res, next) {
   })
 });
 
-router.post('/user/update', function (req, res, next) {
+router.post('/user/update',isLoggedIn, function (req, res, next) {
   var datos = req.body;
   user.update(datos, function (error, datos) {
     if (error) {
@@ -196,7 +196,7 @@ router.post('/user/editPassword', function (req, res, next) {
   })
 })
 
-router.post('/user/delete', function (req, res, next) {
+router.post('/user/delete',isLoggedInAdmin, function (req, res, next) {
   var datos = req.body;
   user.delete(datos, function (error, datos) {
     if (error) {
@@ -214,7 +214,7 @@ router.post('/user/delete', function (req, res, next) {
 })
 
 
-router.post('/user/create', function (req, res, next) {
+router.post('/user/create',isLoggedInAdmin, function (req, res, next) {
   var datos = req.body;
   user.create(datos, function (error, datos) {
     if (error) {
@@ -236,7 +236,7 @@ router.post('/user/create', function (req, res, next) {
 
 
 router.get('/login', function (req, res, next) {
-  res.render('login');
+  res.render('login',{message:null});
 });
 
 router.get('/logout', function (req, res) {

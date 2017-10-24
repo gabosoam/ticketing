@@ -30,6 +30,13 @@
                 <!--Continually expanded and constantly improved Inspinia Admin Them (IN+)-->
             </p>
             <p>Inicia sesión para continuar</p>
+            <% if (message) { %>
+                <div class="alert alert-danger">
+                    <strong>Error!</strong>
+                    <%=message%>
+                </div>
+
+                <% } %>
             <form class="m-t" role="form" action="/login" method="POST">
                 <div class="form-group">
                     <input type="text" class="form-control" name="username" placeholder="Nombre de usuario" required="">
