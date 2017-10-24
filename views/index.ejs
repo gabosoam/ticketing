@@ -203,7 +203,7 @@
                         <div class="ibox chat-view">
 
                             <div class="ibox-title">
-                                <small class="pull-right text-muted">Last message: Mon Jan 26 2015 - 18:39:23</small> Incidencias
+                                <small id="txtTitle" class="pull-right text-muted"></small> Incidencias
                             </div>
 
 
@@ -601,11 +601,11 @@
                 }
 
             });
-                
+
             } else {
                 alert('No puedes ingresar insidencias');
             }
-          
+
 
         });
 
@@ -646,6 +646,7 @@
 
 
         function openIns(ticket) {
+          $('#txtTitle').text('Ticket: '+ticket);
             aux = false
             $.get("/ticket/" + ticket, function (tickets) {
 
