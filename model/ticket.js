@@ -22,6 +22,89 @@ module.exports = {
         });
     },
 
+    pause: function(data,cb) {
+        console.log(data.user)
+        connection.query({
+            sql: 'INSERT INTO `pause` (`ticket`) VALUES (?)',
+            values: [data.data.ticket]
+        }, function(err, results, fields) {
+            if (err) {
+                cb(false,null);
+            } else {
+                if (results.affectedRows==1) {
+                    connection.query({
+                        sql: 'INSERT INTO `incidence` (`user`, `ticket`, `description`) VALUES (?,?,?)',
+                        values: [data.user, data.data.ticket,'Ha pausado el ticket']
+                    }, function(err, results, fields){
+                        if (err) {
+                            cb(err, null)
+                        } else {
+                            console.log(results)
+                            cb(null, true);
+                        }
+
+                    })
+
+                } else {
+                    cb(false,null);
+                }
+               
+            }
+        });
+    },
+
+    quitpause: function(data,cb) {
+      
+        connection.query({
+            sql: 'SELECT * FROM pause WHERE datefinish IS NULL AND ticket =?',
+            values: [data.data.ticket]
+        }, function(err, results, fields) {
+            if (err) {
+                cb(err,null);
+            } else {
+            
+                if (results[0]) {
+                    var id= results[0].id;
+          
+                  connection.query({
+                      sql:'UPDATE `pause` SET `datefinish`=now() WHERE (`id`=?)',
+                      values: [id]
+                  },function(err, results, fields) {
+                      if (err) {
+             
+             
+                        cb(err,null);
+                      } else {
+           
+                        if (results.affectedRows==1) {
+
+                            connection.query({
+                                sql: 'INSERT INTO `incidence` (`user`, `ticket`, `description`) VALUES (?,?,?)',
+                                values: [data.user, data.data.ticket,'Ha reiniciado el ticket']
+                            }, function(err, results, fields){
+                                if (err) {
+                                    cb(err, null)
+                                } else {
+                                    console.log(results)
+                                    cb(null, true);
+                                }
+        
+                            })
+     
+                        } else {
+                      
+                            cb(err,null);
+                        }
+                      }
+                  })
+                } else {
+                    cb('No hay nada',null);
+                }
+               
+            }
+        });
+    },
+
     readOne: function (code, callback) {
         connection.query({
             sql: 'SELECT * FROM v_ticket WHERE id = ? ORDER BY id DESC',
@@ -113,7 +196,7 @@ function createQuery(ticket, users) {
 
 
 function sendEmail(data) {
-   console.log('he lleado')
+
     
 
       var mailOptions = {
@@ -145,14 +228,13 @@ function sendEmail(data) {
 
 
 
-      console.log(mailOptions);
+   
 
       transporter.sendMail(mailOptions, function(error, info){
         if (error) {
-          console.log(error);
+    
         } else {
-            console.log('Todo bien');
-          console.log(info);
+         
         }
       });
     

@@ -117,6 +117,37 @@ router.post('/client/update',isLoggedIn, function (req,res,next) {
  })
 });
 
+router.post('/pause',isLoggedIn, function(req, res,next) {
+  var data = {
+    data: req.body,
+    user: req.session.usuarioDatos.id
+  }
+  ticket.pause(data, function(err, results) {
+    if (err) {
+      res.send(false);
+    } else {
+      res.send(true);
+    }
+  })
+
+})
+
+router.post('/quitpause',isLoggedIn, function(req, res,next) {
+  var data = {
+    data: req.body,
+    user: req.session.usuarioDatos.id
+  }
+  ticket.quitpause(data, function(err, results) {
+    if (err) {
+      res.send(false);
+    } else {
+      console.log(results)
+      res.send(true);
+    }
+  })
+
+})
+
 router.post('/client/delete', isLoggedIn, function (req,res,next) {
   var datos= req.body;
   client.delete(datos,function(error, datos){
