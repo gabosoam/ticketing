@@ -22,6 +22,18 @@ module.exports = {
         });
     },
 
+    readadmin: function (callback) {
+        connection.query({
+            sql: 'SELECT * FROM v_time WHERE statename=\'FINALIZADO\' ORDER BY open DESC'
+        }, function (error, results, fields) {
+            if (error) {
+                callback(error, null);
+            } else {
+                callback(null, results)
+            }
+        });
+    },
+
     pause: function(data,cb) {
         console.log(data.user)
         connection.query({

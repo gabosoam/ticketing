@@ -25,7 +25,7 @@ router.get('/users', isLoggedInAdmin, function (req, res, next) {
   res.render('user', { user: sess.adminDatos });
 });
 
-router.get('/tickets/:user',isLoggedIn, function (req, res, next) {
+router.get('/tickets/:user', isLoggedIn, function (req, res, next) {
   var userTicket = req.params.user;
   ticket.read(userTicket, function (error, results) {
     if (error) {
@@ -61,7 +61,7 @@ router.get('/incidence/:ticket', isLoggedIn, function (req, res, next) {
   })
 });
 
-router.post('/ticket',isLoggedIn, function (req, res, next) {
+router.post('/ticket', isLoggedIn, function (req, res, next) {
   console.log('Ya llegué');
   var data = req.body;
 
@@ -100,29 +100,29 @@ router.get('/client', isLoggedIn, function (req, res, next) {
   })
 });
 
-router.post('/client/update',isLoggedIn, function (req,res,next) {
-  var datos= req.body;
-  client.update(datos,function(error, datos){
-   if (error) {
+router.post('/client/update', isLoggedIn, function (req, res, next) {
+  var datos = req.body;
+  client.update(datos, function (error, datos) {
+    if (error) {
 
-     res.sendStatus(500);
-   } else {
+      res.sendStatus(500);
+    } else {
 
-     if (datos.affectedRows>0) {
-          res.send(true);
-     } else {
-           res.sendStatus(500);
-     }   
-   }
- })
+      if (datos.affectedRows > 0) {
+        res.send(true);
+      } else {
+        res.sendStatus(500);
+      }
+    }
+  })
 });
 
-router.post('/pause',isLoggedIn, function(req, res,next) {
+router.post('/pause', isLoggedIn, function (req, res, next) {
   var data = {
     data: req.body,
     user: req.session.usuarioDatos.id
   }
-  ticket.pause(data, function(err, results) {
+  ticket.pause(data, function (err, results) {
     if (err) {
       res.send(false);
     } else {
@@ -132,12 +132,12 @@ router.post('/pause',isLoggedIn, function(req, res,next) {
 
 })
 
-router.post('/quitpause',isLoggedIn, function(req, res,next) {
+router.post('/quitpause', isLoggedIn, function (req, res, next) {
   var data = {
     data: req.body,
     user: req.session.usuarioDatos.id
   }
-  ticket.quitpause(data, function(err, results) {
+  ticket.quitpause(data, function (err, results) {
     if (err) {
       res.send(false);
     } else {
@@ -148,39 +148,39 @@ router.post('/quitpause',isLoggedIn, function(req, res,next) {
 
 })
 
-router.post('/client/delete', isLoggedIn, function (req,res,next) {
-  var datos= req.body;
-  client.delete(datos,function(error, datos){
-   if (error) {
- 
-     res.sendStatus(500);
-   } else {
+router.post('/client/delete', isLoggedIn, function (req, res, next) {
+  var datos = req.body;
+  client.delete(datos, function (error, datos) {
+    if (error) {
 
-     if (datos.affectedRows>0) {
-          res.send(true);
-     } else {
-           res.sendStatus(500);
-     }   
-   }
- })
+      res.sendStatus(500);
+    } else {
+
+      if (datos.affectedRows > 0) {
+        res.send(true);
+      } else {
+        res.sendStatus(500);
+      }
+    }
+  })
 })
 
 
-router.post('/client/create',isLoggedIn, function (req,res,next) {
-  var datos= req.body;
-  client.create(datos,function(error, datos){
-   if (error) {
+router.post('/client/create', isLoggedIn, function (req, res, next) {
+  var datos = req.body;
+  client.create(datos, function (error, datos) {
+    if (error) {
 
-     res.status(500).send(error);
-   } else {
+      res.status(500).send(error);
+    } else {
 
-     if (datos.affectedRows>0) {
-          res.send(true);
-     } else {
-           res.sendStatus(500);
-     }   
-   }
- })
+      if (datos.affectedRows > 0) {
+        res.send(true);
+      } else {
+        res.sendStatus(500);
+      }
+    }
+  })
 })
 
 
@@ -197,7 +197,7 @@ router.get('/user', isLoggedIn, function (req, res, next) {
   })
 });
 
-router.post('/user/update',isLoggedIn, function (req, res, next) {
+router.post('/user/update', isLoggedIn, function (req, res, next) {
   var datos = req.body;
   user.update(datos, function (error, datos) {
     if (error) {
@@ -222,12 +222,12 @@ router.post('/user/editPassword', function (req, res, next) {
       res.send(error);
     } else {
       res.send(datos);
-      
+
     }
   })
 })
 
-router.post('/user/delete',isLoggedInAdmin, function (req, res, next) {
+router.post('/user/delete', isLoggedInAdmin, function (req, res, next) {
   var datos = req.body;
   user.delete(datos, function (error, datos) {
     if (error) {
@@ -245,7 +245,7 @@ router.post('/user/delete',isLoggedInAdmin, function (req, res, next) {
 })
 
 
-router.post('/user/create',isLoggedInAdmin, function (req, res, next) {
+router.post('/user/create', isLoggedInAdmin, function (req, res, next) {
   var datos = req.body;
   user.create(datos, function (error, datos) {
     if (error) {
@@ -261,13 +261,24 @@ router.post('/user/create',isLoggedInAdmin, function (req, res, next) {
       }
     }
   })
+});
+
+router.get('/readadmin', isLoggedInAdmin, function (req, res, next) {
+  ticket.readadmin(function (err, data) {
+    if (err) {
+      console.log(err);
+      res.sendStatus(500);
+    } else {
+      res.send(data);
+    }
+  })
 })
 
 
 
 
 router.get('/login', function (req, res, next) {
-  res.render('login',{message:null});
+  res.render('login', { message: null });
 });
 
 router.get('/logout', function (req, res) {
