@@ -54,7 +54,7 @@ $(document).ready(function () {
         height: 475,
         filterable: true,
         pageable: { refresh: true, pageSizes: true, },
-        toolbar: ['create','excel'],
+        toolbar: ['excel'],
         columns: [
             { field: "id", title: "Ticket", filterable: { multi: true, search: true, search: true } },
             { field: "name", title: "Cliente", filterable: { multi: true, search: true, search: true } },
