@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 router.io = require('socket.io')();
 var ticket = require('../model/ticket');
+var fs = require('fs');
 
 /* GET users listing. */
 router.get('/', function (req, res, next) {
@@ -20,6 +21,15 @@ socket.on('prueba', function(data, callback) {
       console.log(error);
       callback(error,null);
     } else {
+      console.log("DATAAAAAAAAAAAAAAAAAAAAA");
+      console.log(data);
+      fs.mkdirSync('./public/images/tickets/'+data.insertId,function(err) {
+        if (err) {
+          console.log(err)
+        } else {
+          
+        }
+      });
       callback(null,data);
     }
   });

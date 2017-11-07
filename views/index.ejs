@@ -109,7 +109,7 @@
 
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="ibox float-e-margins">
+                        <div class="ibox float-e-margins collapsed">
                             <div class="ibox-title">
                                 <h5>Agregar ticket</h5>
                                 <div class="ibox-tools">
@@ -335,81 +335,99 @@
 
                 </div>
                 <div class="modal-body">
-                    <div class="ibox chat-view">
 
-                        <div class="ibox-title">
-                            <small id="txtTitle" class="pull-right text-muted"></small> Incidencias
+                    <div class="row">
+                        <div class="col-md-8">
+                                <div class="ibox chat-view">
+                                        
+                                                                <div class="ibox-title">
+                                                                    <small id="txtTitle" class="pull-right text-muted"></small> Incidencias
+                                                                </div>
+                                        
+                                        
+                                                                <div class="ibox-content">
+                                        
+                                                                    <div class="row">
+                                        
+                                                                        <div class="col-md-12 ">
+                                                                            <div id="action" class="hidden">
+                                                                                <button id="actionplay" class="btn btn-danger  dim" type="button"><i class="fa fa-play"></i></button>
+                                                                                <button id="actionpause" onclick="pauseticket()" class="btn btn-success  dim" type="button"><i class="fa fa-pause"></i></button>
+                                                                            </div>
+                                        
+                                                                            <div id="Incidences" class="chat-discussion hidden">
+                                        
+                                                                                <div class="chat-message left" w3-repeat="incidences">
+                                                                                    <img class="message-avatar" src="img/a4.jpg" alt="">
+                                                                                    <div id="divchat" class="message">
+                                                                                        <a class="message-author" href="#"> {{user}} </a>
+                                                                                        <span class="message-date"> {{date}} - {{time}} </span>
+                                                                                        <span class="message-content">
+                                                                                                                                {{description}}
+                                                                                                                            </span>
+                                                                                    </div>
+                                                                                </div>
+                                        
+                                        
+                                        
+                                        
+                                                                            </div>
+                                        
+                                                                        </div>
+                                        
+                                        
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <div class="col-lg-12">
+                                                                            <div id="formIns" class="hidden">
+                                                                                <form id="formIncidence">
+                                                                                    <div class="chat-message-form">
+                                        
+                                                                                        <div class="form-group">
+                                        
+                                                                                            <input type="hidden" name="user" value="<%=user.id%>">
+                                                                                            <input id="txtTicket" type="hidden" name="ticket" value="">
+                                        
+                                                                                            <textarea required class="form-control message-input" name="description" placeholder="Ingresar una incidencia"></textarea>
+                                        
+                                                                                        </div>
+                                        
+                                        
+                                                                                    </div>
+                                                                                    <br>
+                                                                                    <div>
+                                                                                        <button id="saveIncidence" class="btn btn-sm btn-primary pull-right m-t-n-xs" type="button">
+                                                                                                                                <strong>Enviar</strong>
+                                                                                                                            </button>
+                                                                                        <label>
+                                                                                                                                <input type="checkbox" name="isClosed" class="i-checks"> Finalizar ticket </label>
+                                                                                    </div>
+                                                                                </form>
+                                                                            </div>
+                                        
+                                        
+                                                                        </div>
+                                                                    </div>
+                                        
+                                        
+                                                                </div>
+                                        
+                                                            </div>
                         </div>
-
-
-                        <div class="ibox-content">
-
-                            <div class="row">
-
-                                <div class="col-md-12 ">
-                                    <div id="action" class="hidden">
-                                        <button id="actionplay" class="btn btn-danger  dim" type="button"><i class="fa fa-play"></i></button>
-                                        <button id="actionpause" onclick="pauseticket()" class="btn btn-success  dim" type="button"><i class="fa fa-pause"></i></button>
-                                    </div>
-
-                                    <div id="Incidences" class="chat-discussion hidden">
-
-                                        <div class="chat-message left" w3-repeat="incidences">
-                                            <img class="message-avatar" src="img/a4.jpg" alt="">
-                                            <div id="divchat" class="message">
-                                                <a class="message-author" href="#"> {{user}} </a>
-                                                <span class="message-date"> {{date}} - {{time}} </span>
-                                                <span class="message-content">
-                                                                                        {{description}}
-                                                                                    </span>
-                                            </div>
-                                        </div>
-
-
-
-
-                                    </div>
-
-                                </div>
-
-
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div id="formIns" class="hidden">
-                                        <form id="formIncidence">
-                                            <div class="chat-message-form">
-
-                                                <div class="form-group">
-
-                                                    <input type="hidden" name="user" value="<%=user.id%>">
-                                                    <input id="txtTicket" type="hidden" name="ticket" value="">
-
-                                                    <textarea required class="form-control message-input" name="description" placeholder="Ingresar una incidencia"></textarea>
-
-                                                </div>
-
-
-                                            </div>
-                                            <br>
-                                            <div>
-                                                <button id="saveIncidence" class="btn btn-sm btn-primary pull-right m-t-n-xs" type="button">
-                                                                                        <strong>Enviar</strong>
-                                                                                    </button>
-                                                <label>
-                                                                                        <input type="checkbox" name="isClosed" class="i-checks"> Finalizar ticket </label>
-                                            </div>
-                                        </form>
-                                    </div>
-
-
-                                </div>
-                            </div>
-
-
+                        <div class="col-md-4">
+                            <ul id="Files" class="list-group">
+                                <i class="list-group-item"  w3-repeat="files">
+                                    <a target="_blank" id="download" href="../images/tickets/{{ticket}}/{{filename}}" class="btn btn-link" href="#" >{{filename}}</a>
+                                </i>
+                            </ul>
+                            <form action="/fileupload" method="POST" enctype="multipart/form-data">
+                                <input required id="txtTicketForm" type="hidden" name="ticket">
+                                <input required type="file" name="filetoupload"><br>
+                                <input type="submit">
+                            </form>
                         </div>
-
                     </div>
+                   
 
                 </div>
 
@@ -423,7 +441,7 @@
 
     </div>
 
-    <div class="modal fade" id="modalIns" role="dialog" aria-hidden="true">
+    <div class="modal fade" id="modalIns" role="dialog">
         <div class="modal-dialog modal-lg">
             <div class="modal-content modal-lg">
                 <div class="modal-header">
@@ -568,12 +586,19 @@
 
         $(document).ready(function () {
             $('.summernote').summernote({
-                height: 150
+                height: 150,
+                fontNames: ['Arial Narrow'],
+                toolbar: [
+                    // [groupName, [list of button]]
+                    ['style', ['bold', 'italic', 'underline', 'clear']],
+                    ['fontsize', ['fontsize']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph','hr']],
+                    ['height', ['height']],
+                    ['picture', ['picture']]
+                ]
             });
-            $('.summernote2').summernote({
-                height: 400
-            });
-            $('.summernote').css('font-size','40px');
+
             refreshTicket();
         });
 
@@ -691,6 +716,7 @@
             $('#modalAdd').modal();
 
             $('#txtTitle').text('Ticket: ' + ticket);
+            $('#txtTicketForm').val(ticket);
             $('#actionpause').off('click');
             $('#actionplay').off('click');
 
@@ -722,8 +748,13 @@
             });
             aux = false
             $.get("/ticket/" + ticket, function (tickets) {
-                console.log(tickets[0])
-                if (tickets[0].pause == 0) {
+                console.log(tickets.files)
+
+                w3.displayObject("Files", {files: tickets.files});
+
+    
+         
+                if (tickets.results[0].pause == 0) {
                     $("#actionplay").prop('disabled', true);
                     $("#actionpause").prop('disabled', false);
                 } else {
@@ -731,10 +762,10 @@
                     $("#actionpause").prop('disabled', true);
                 }
 
-                $("#txtTicket").val(tickets[0].id);
+                $("#txtTicket").val(tickets.results[0].id);
 
 
-                if (tickets[0].state == 'warning') {
+                if (tickets.results[0].state == 'warning') {
                     w3.removeClass("#formIns", 'hidden');
                     w3.removeClass("#action", 'hidden');
                     //w3.addClass("#actionplay", 'disabled');

@@ -4,12 +4,41 @@ var user = require('../model/user');
 var ticket = require('../model/ticket');
 var client = require('../model/client');
 var incidence = require('../model/incidence');
+var formidable = require('formidable');
+var fs = require('fs');
 
 
 /* GET home page. */
 router.get('/', isLoggedIn, function (req, res, next) {
   res.render('index', { user: sess.usuarioDatos, message: 'null' });
 });
+
+router.post('/fileupload', function (req, res, next) {
+    var entrada = new formidable.IncomingForm();
+  
+    entrada.parse(req, function (err, fields, files) {
+      console.log(fields);
+      // modelo.insertar(fields, function (error, resultado) {
+      //   if (error) {
+  
+  
+      //   } else {
+  
+      //   }
+      // });
+      var oldpath = files.filetoupload.path;
+      console.log(oldpath);
+      var newpath = './public/images/tickets/'+fields.ticket+'/'+files.filetoupload.name;
+      fs.rename(oldpath, newpath, function (err) {
+        if (err)
+          throw err;
+        res.redirect('/');
+      });
+  
+    });
+  
+  
+  });
 
 router.get('/admin', isLoggedInAdmin, function (req, res, next) {
   res.render('admin', { user: sess.adminDatos });
@@ -26,12 +55,15 @@ router.get('/users', isLoggedInAdmin, function (req, res, next) {
 });
 
 router.get('/tickets/:user', isLoggedIn, function (req, res, next) {
+ 
   var userTicket = req.params.user;
   ticket.read(userTicket, function (error, results) {
     if (error) {
       console.log(error);
       res.send(500);
     } else {
+      
+
       res.send(results);
     }
   })
@@ -39,12 +71,25 @@ router.get('/tickets/:user', isLoggedIn, function (req, res, next) {
 
 router.get('/ticket/:code', isLoggedIn, function (req, res, next) {
   var code = req.params.code;
+  console.log('hello');
   ticket.readOne(code, function (error, results) {
     if (error) {
       console.log(error);
       res.send(500);
     } else {
-      res.send(results);
+      fs.readdir('./public/images/tickets/'+code,function(error, files) {
+        if (error) {
+          console.log(error);
+        } else {
+          var filesArray = []
+          for (var i = 0; i < files.length; i++) {
+            filesArray.push({filename: files[i], ticket: code})
+            
+          }
+          res.send({results:results, files:filesArray});
+        }
+      })
+      
     }
   })
 });
@@ -71,6 +116,8 @@ router.post('/ticket', isLoggedIn, function (req, res, next) {
       console.log(error);
       res.send(error);
     } else {
+      fs.mkdirSync('../public/images/tickets', 'prueba');
+
       res.send(data)
     }
   });

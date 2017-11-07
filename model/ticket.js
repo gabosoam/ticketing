@@ -141,18 +141,18 @@ module.exports = {
         connection.query({
             sql: 'INSERT INTO `ticket` (`client`, `type`, `priority`, `subject`, `description`, `user`) VALUES (?,?,?,?,?,?)',
             values: [data.data.client, data.data.type, data.data.priority, data.data.subject.toUpperCase(), data.data.description, data.data.user]
-        }, function (error, results, fields) {
+        }, function (error, results2, fields) {
             if (error) {
                 callback(error, null);
             } else {
     
 
-                if (results.affectedRows = 1) {
+                if (results2.affectedRows = 1) {
 
-                    var idcreate=results.insertId;
+                    var idcreate=results2.insertId;
                     connection.query({
                         sql: 'INSERT INTO `incidence` (`user`, `ticket`, `description`) VALUES (?, ?, \'Ha creado el ticket\')',
-                        values: [data.data.user,results.insertId]
+                        values: [data.data.user,results2.insertId]
                     }, function (error, results, fields) {
                         if (error) {
                        
@@ -162,7 +162,7 @@ module.exports = {
                       
                     });
 
-                    var sql = createQuery(results.insertId, data.users);
+                    var sql = createQuery(results2.insertId, data.users);
                     connection.query({
                         sql: sql
                     }, function (error, results, fields) {
@@ -176,7 +176,7 @@ module.exports = {
                                 sendEmail(res[0]);
                             });
 
-                            callback(null, results)
+                            callback(null, results2)
                         }
                     });
                 } else {
