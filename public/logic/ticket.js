@@ -54,6 +54,10 @@ $(document).ready(function () {
         height: 475,
         filterable: true,
         pageable: { refresh: true, pageSizes: true, },
+        sortable: {
+            mode: "single",
+            allowUnsort: false
+        },
         toolbar: ['excel'],
         columns: [
             { field: "id", title: "Ticket", filterable: { multi: true, search: true, search: true } },

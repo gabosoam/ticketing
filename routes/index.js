@@ -116,6 +116,7 @@ router.post('/ticket', isLoggedIn, function (req, res, next) {
       console.log(error);
       res.send(error);
     } else {
+      var dir = './tmp';
       fs.mkdirSync('../public/images/tickets', 'prueba');
 
       res.send(data)

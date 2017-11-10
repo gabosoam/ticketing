@@ -23,13 +23,17 @@ socket.on('prueba', function(data, callback) {
     } else {
       console.log("DATAAAAAAAAAAAAAAAAAAAAA");
       console.log(data);
-      fs.mkdirSync('./public/images/tickets/'+data.insertId,function(err) {
-        if (err) {
-          console.log(err)
-        } else {
-          
-        }
-      });
+      var dir = './public/images/tickets/'+data.insertId;
+      if (!fs.existsSync(dir)) {
+        fs.mkdirSync(dir,function(err) {
+          if (err) {
+            console.log(err)
+          } else {
+            
+          }
+        });
+      }
+      
       callback(null,data);
     }
   });

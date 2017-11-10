@@ -225,7 +225,8 @@
                                 <h4 id="textAux"></h4>
 
                                 <div class="table-responsive">
-                                    <table id="Tickets" class="footable table table-stripped toggle-arrow-tiny hidden " data-page-size="2" data-filtering="true">
+                                        <div id="filter-form-container"></div>
+                                    <table id="Tickets" class="footable table table-stripped toggle-arrow-tiny hidden " data-page-size="10" data-filtering="true" data-filter-container="#filter-form-container">
                                         <thead>
                                             <tr>
                                                 <th data-toggle="all">Informacíon</th>
@@ -331,103 +332,104 @@
                         <span aria-hidden="true">&times;</span>
                         <span class="sr-only">Close</span>
                     </button>
-                    <h4 class="modal-title">Registrar un nuevo ticket</h4>
+                    <h4 class="modal-title">Incidencias y archivos</h4>
 
                 </div>
-                <div class="modal-body">
+                <div class="modal-body" style="background-color: white">
 
                     <div class="row">
-                        <div class="col-md-8">
-                                <div class="ibox chat-view">
-                                        
-                                                                <div class="ibox-title">
-                                                                    <small id="txtTitle" class="pull-right text-muted"></small> Incidencias
-                                                                </div>
-                                        
-                                        
-                                                                <div class="ibox-content">
-                                        
-                                                                    <div class="row">
-                                        
-                                                                        <div class="col-md-12 ">
-                                                                            <div id="action" class="hidden">
-                                                                                <button id="actionplay" class="btn btn-danger  dim" type="button"><i class="fa fa-play"></i></button>
-                                                                                <button id="actionpause" onclick="pauseticket()" class="btn btn-success  dim" type="button"><i class="fa fa-pause"></i></button>
-                                                                            </div>
-                                        
-                                                                            <div id="Incidences" class="chat-discussion hidden">
-                                        
-                                                                                <div class="chat-message left" w3-repeat="incidences">
-                                                                                    <img class="message-avatar" src="img/a4.jpg" alt="">
-                                                                                    <div id="divchat" class="message">
-                                                                                        <a class="message-author" href="#"> {{user}} </a>
-                                                                                        <span class="message-date"> {{date}} - {{time}} </span>
-                                                                                        <span class="message-content">
+                        <div class="col-md-7">
+                            <div class="ibox chat-view">
+
+                                <div class="ibox-title">
+                                    <small id="txtTitle" class="pull-right text-muted"></small> Incidencias
+                                </div>
+
+
+                                <div class="ibox-content">
+
+                                    <div class="row">
+
+                                        <div class="col-md-12 ">
+                                            <div id="action" class="hidden">
+                                                <button id="actionplay" class="btn btn-danger  dim" type="button"><i class="fa fa-play"></i></button>
+                                                <button id="actionpause" onclick="pauseticket()" class="btn btn-success  dim" type="button"><i class="fa fa-pause"></i></button>
+                                            </div>
+
+                                            <div id="Incidences" class="chat-discussion hidden">
+
+                                                <div class="chat-message left" w3-repeat="incidences">
+                                                    <img class="message-avatar" src="img/a4.jpg" alt="">
+                                                    <div id="divchat" class="message">
+                                                        <a class="message-author" href="#"> {{user}} </a>
+                                                        <span class="message-date"> {{date}} - {{time}} </span>
+                                                        <span class="message-content">
                                                                                                                                 {{description}}
                                                                                                                             </span>
-                                                                                    </div>
-                                                                                </div>
-                                        
-                                        
-                                        
-                                        
-                                                                            </div>
-                                        
-                                                                        </div>
-                                        
-                                        
-                                                                    </div>
-                                                                    <div class="row">
-                                                                        <div class="col-lg-12">
-                                                                            <div id="formIns" class="hidden">
-                                                                                <form id="formIncidence">
-                                                                                    <div class="chat-message-form">
-                                        
-                                                                                        <div class="form-group">
-                                        
-                                                                                            <input type="hidden" name="user" value="<%=user.id%>">
-                                                                                            <input id="txtTicket" type="hidden" name="ticket" value="">
-                                        
-                                                                                            <textarea required class="form-control message-input" name="description" placeholder="Ingresar una incidencia"></textarea>
-                                        
-                                                                                        </div>
-                                        
-                                        
-                                                                                    </div>
-                                                                                    <br>
-                                                                                    <div>
-                                                                                        <button id="saveIncidence" class="btn btn-sm btn-primary pull-right m-t-n-xs" type="button">
+                                                    </div>
+                                                </div>
+
+
+
+
+                                            </div>
+
+                                        </div>
+
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div id="formIns" class="hidden">
+                                                <form id="formIncidence">
+                                                    <div class="chat-message-form">
+
+                                                        <div class="form-group">
+
+                                                            <input type="hidden" name="user" value="<%=user.id%>">
+                                                            <input id="txtTicket" type="hidden" name="ticket" value="">
+
+                                                            <textarea required class="form-control message-input" name="description" placeholder="Ingresar una incidencia"></textarea>
+
+                                                        </div>
+
+
+                                                    </div>
+                                                    <br>
+                                                    <div>
+                                                        <button id="saveIncidence" class="btn btn-sm btn-primary pull-right m-t-n-xs" type="button">
                                                                                                                                 <strong>Enviar</strong>
                                                                                                                             </button>
-                                                                                        <label>
+                                                        <label>
                                                                                                                                 <input type="checkbox" name="isClosed" class="i-checks"> Finalizar ticket </label>
-                                                                                    </div>
-                                                                                </form>
-                                                                            </div>
-                                        
-                                        
-                                                                        </div>
-                                                                    </div>
-                                        
-                                        
-                                                                </div>
-                                        
-                                                            </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+                            </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-5">
                             <ul id="Files" class="list-group">
-                                <i class="list-group-item"  w3-repeat="files">
+                                <i class="list-group-item" w3-repeat="files">
                                     <a target="_blank" id="download" href="../images/tickets/{{ticket}}/{{filename}}" class="btn btn-link" href="#" >{{filename}}</a>
                                 </i>
                             </ul>
-                            <form action="/fileupload" method="POST" enctype="multipart/form-data">
+
+                            <form id="formUpdate" action="/fileupload" method="POST" enctype="multipart/form-data">
                                 <input required id="txtTicketForm" type="hidden" name="ticket">
                                 <input required type="file" name="filetoupload"><br>
                                 <input type="submit">
                             </form>
                         </div>
                     </div>
-                   
+
 
                 </div>
 
@@ -593,7 +595,7 @@
                     ['style', ['bold', 'italic', 'underline', 'clear']],
                     ['fontsize', ['fontsize']],
                     ['color', ['color']],
-                    ['para', ['ul', 'ol', 'paragraph','hr']],
+                    ['para', ['ul', 'ol', 'paragraph', 'hr']],
                     ['height', ['height']],
                     ['picture', ['picture']]
                 ]
@@ -681,7 +683,11 @@
                 if (data.length > 0) {
                     w3.removeClass("#Tickets", 'hidden')
                     w3.displayObject("Tickets", { tickets: data });
-                    $('.footable').footable();
+                    $('.footable').footable({
+                        "filtering": {
+                            "enabled": true
+                        }
+                    });
                 } else {
                     $('#textAux').text('No existen tickets vigentes');
                 }
@@ -720,47 +726,81 @@
             $('#actionpause').off('click');
             $('#actionplay').off('click');
 
+
+
             $('#actionpause').click(function () {
-                if (!this.disabled) {
-                    $.post("/pause", { ticket: ticket }, function (data) {
-                        if (data == true) {
-                            $("#actionpause").prop('disabled', true);
-                            $("#actionplay").prop('disabled', false);
-                            openIns(ticket);
+                if (aux) {
+                    var confirmation = confirm("¿Está seguro de pausar el ticket?");
+                    if (confirmation) {
+                        if (!this.disabled) {
+                            $.post("/pause", { ticket: ticket }, function (data) {
+                                if (data == true) {
+                                    $("#actionpause").hide();;
+                                    $("#actionplay").show();
+                                    $('#formIns').hide();
+                                    openIns(ticket);
+                                }
+                            });
                         }
-                    });
+                    }
+                } else {
+                    alert("No tienes permiso para pausar el ticket");
                 }
+
+
 
 
             });
             $('#actionplay').click(function () {
-                if (!this.disabled) {
-                    $.post("/quitpause", { ticket: ticket }, function (data) {
-                        if (data == true) {
-                            $("#actionpause").prop('disabled', false);
-                            $("#actionplay").prop('disabled', true);
-                            openIns(ticket);
+                if (aux) {
+                    var confirmation = confirm("¿Está seguro de reiniciar el ticket?");
+                    if (confirmation) {
+                        if (!this.disabled) {
+                            $.post("/quitpause", { ticket: ticket }, function (data) {
+                                if (data == true) {
+                                    $("#actionpause").show();
+                                    $("#actionplay").hide();
+                                    openIns(ticket);
+                                    $('#formIns').show();
+                                }
+                            });
                         }
-                    });
+                    }
+
+                } else {
+                    alert("No tienes permiso para reiniciar el ticket");
                 }
+
 
 
             });
             aux = false
             $.get("/ticket/" + ticket, function (tickets) {
-                console.log(tickets.files)
+                $('#Files').hide();
+                if (tickets.files.length > 0) {
 
-                w3.displayObject("Files", {files: tickets.files});
+                    $('#Files').show();
+                    w3.displayObject("Files", { files: tickets.files });
+                } else {
+                    $('#Files').hide();
+                }
 
-    
-         
+
+
+
                 if (tickets.results[0].pause == 0) {
-                    $("#actionplay").prop('disabled', true);
+                    $("#actionplay").hide();
                     $("#actionpause").prop('disabled', false);
+                    $('#formIns').show();
+              
                 } else {
                     $("#actionplay").prop('disabled', false);
-                    $("#actionpause").prop('disabled', true);
+                    $("#actionpause").hide();
+                    $('#formIns').hide();
+                    
                 }
+
+
 
                 $("#txtTicket").val(tickets.results[0].id);
 
@@ -789,6 +829,12 @@
                         aux = true;
                     }
 
+                }
+
+                if (!aux) {
+                    $('#formUpdate').hide();
+                } else {
+                    $('#formUpdate').show();
                 }
 
 

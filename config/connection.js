@@ -10,7 +10,7 @@ let mysql = require('mysql'),
     myConn = mysql.createConnection(db_config);
 
     myConn.connect(function(err){
-      return (err)? console.log(`conexión fallida ${err.stack}`) : console.log(`conectado a la base de datos` );
+      return (err)? console.log(`conexión fallida ${err}`) : console.log(`conectado a la base de datos` );
     });
 
 module.exports = myConn;
